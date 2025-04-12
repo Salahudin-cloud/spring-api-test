@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url:  ${DB_URL:jdbc:postgresql://localhost:5432/api-test}
+    username: ${DB_USER:asdf}
+    password: ${DB_PASSWORD:asdf}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      format-sql: true
+    show-sql: true
+
+  output:
+    ansi:
+      enabled: always

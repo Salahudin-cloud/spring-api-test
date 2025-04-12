@@ -1,0 +1,10 @@
+services:
+  database-test:
+    container_name: database-test
+    image: postgres:17-alpine3.20
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: asdf
+      POSTGRES_USER: asdf
+      POSTGRES_DB: api-test
