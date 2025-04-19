@@ -1,5 +1,6 @@
-package com.test.api.dto;
+package com.test.api.dto.user;
 
+import com.test.api.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class UserResponse {
     private String name;
     private String username;
     private String password;
+    private User.RoleBase role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

@@ -29,10 +29,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private RoleBase role;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public enum RoleBase{
+        ADMIN,USER
+    }
 }
