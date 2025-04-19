@@ -1,5 +1,15 @@
+# Stage 1: Build the application
+FROM gradle:8.5-jdk21 AS build
+WORKDIR /app
+COPY . .
+RUN gradle build -x test
+
+# Stage 2: Run the application
 FROM openjdk:21-jdk-oracle
+WORKDIR /app
 
-COPY build/libs/api-0.0.1-SNAPSHOT.jar /app/application.jar
+# Copy only the built JAR from the previous stage
+COPY --from=build /app/build/libs/*.jar application.jar
 
-CMD ["java", "-jar", "/app/application.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "application.jar"]
