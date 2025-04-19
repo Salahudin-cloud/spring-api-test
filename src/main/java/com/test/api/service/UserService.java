@@ -1,30 +1,35 @@
 package com.test.api.service;
 
-import com.test.api.dto.UserCreateRequest;
-import com.test.api.dto.UserResponse;
-import com.test.api.dto.UserUpdateRequest;
+import com.test.api.dto.user.UserCreateRequest;
+import com.test.api.dto.user.UserResponse;
+import com.test.api.dto.user.UserUpdateRequest;
 import com.test.api.dto.WebResponse;
 import com.test.api.entity.User;
 import com.test.api.repository.UserRepository;
-import com.test.api.util.BCrypt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public WebResponse<Void> createNewUser(UserCreateRequest request) {
         User newUser = User.builder()
                 .name(request.getName())
                 .username(request.getUsername())
-                .password(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()))
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
                 .build();
 
         userRepository.save(newUser);
@@ -34,20 +39,23 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public WebResponse<Void>updateUser(Long id,UserUpdateRequest request) {
         User userData = getUserById(id);
 
-        if (request.getName() != null) {
-            userData.setName(request.getName());
-        }
+        Optional.ofNullable(request.getName())
+                .ifPresent(userData::setName);
 
-        if (request.getUsername() != null) {
-            userData.setUsername(request.getUsername());
-        }
+        Optional.ofNullable(request.getUsername())
+                .ifPresent(userData::setUsername);
 
-        if (request.getPassword() != null) {
-            userData.setPassword(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));
-        }
+        Optional.ofNullable(request.getPassword())
+                .ifPresent(x -> {
+                    userData.setPassword(passwordEncoder.encode(request.getPassword()));
+                });
+
+        Optional.ofNullable(request.getRole())
+                        .ifPresent(userData::setRole);
 
         userRepository.save(userData);
 
@@ -57,6 +65,7 @@ public class UserService {
     }
 
 
+    @Transactional
     public WebResponse<Void> deleteUser(Long id) {
         User user = getUserById(id);
         userRepository.delete(user);
@@ -76,6 +85,7 @@ public class UserService {
                         .name(x.getName())
                         .username(x.getUsername())
                         .password(x.getPassword())
+                        .role(x.getRole())
                         .createdAt(x.getCreatedAt())
                         .updatedAt(x.getUpdatedAt())
                         .build()
@@ -95,6 +105,7 @@ public class UserService {
                 .name(user.getName())
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();

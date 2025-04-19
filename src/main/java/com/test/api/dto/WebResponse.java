@@ -14,6 +14,7 @@ import java.util.List;
 public class WebResponse <T> {
 
     private String message;
+    private String token;
     private T data;
     private List<String>errors;
 

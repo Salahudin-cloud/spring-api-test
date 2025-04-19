@@ -1,7 +1,7 @@
 package com.test.api.controller;
 
-import com.test.api.dto.UserCreateRequest;
-import com.test.api.dto.UserUpdateRequest;
+import com.test.api.dto.user.UserCreateRequest;
+import com.test.api.dto.user.UserUpdateRequest;
 import com.test.api.dto.WebResponse;
 import com.test.api.service.UserService;
 import jakarta.validation.Valid;

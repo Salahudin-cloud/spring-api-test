@@ -1,6 +1,6 @@
-package com.test.api.dto;
+package com.test.api.dto.user;
 
-import jakarta.validation.constraints.NotEmpty;
+import com.test.api.entity.User;
 import lombok.*;
 
 @AllArgsConstructor
@@ -13,5 +13,6 @@ public class UserUpdateRequest {
     private String name;
     private String username;
     private String password;
+    private User.RoleBase role;
 
 }

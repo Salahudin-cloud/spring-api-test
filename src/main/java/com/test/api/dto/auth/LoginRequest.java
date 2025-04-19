@@ -1,4 +1,4 @@
-package com.test.api.dto;
+package com.test.api.dto.auth;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -8,14 +8,12 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UserCreateRequest {
-
-    @NotEmpty(message = "Name are required")
-    private String name;
+public class LoginRequest {
 
     @NotEmpty(message = "Username are required")
     private String username;
 
     @NotEmpty(message = "Password are required")
     private String password;
+
 }
