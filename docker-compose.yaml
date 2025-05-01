@@ -25,14 +25,14 @@ services:
 #      - database-test
 
 #using from docker hub
-#  backend:
-#    image: nowyoucanseeme/spring-api-test:0.0.2
-#    container_name: app-backend
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://database-test:5432/api-test
-#      SPRING_DATASOURCE_USERNAME: asdf
-#      SPRING_DATASOURCE_PASSWORD: asdf
-#    depends_on:
-#      - database-test
+  backend:
+    image: nowyoucanseeme/spring-api-test:0.0.4
+    container_name: app-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database-test:5432/api-test
+      SPRING_DATASOURCE_USERNAME: asdf
+      SPRING_DATASOURCE_PASSWORD: asdf
+    depends_on:
+      - database-test
