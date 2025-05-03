@@ -1,6 +1,7 @@
 package com.test.api.controller;
 
 import com.test.api.dto.user.UserCreateRequest;
+import com.test.api.dto.user.UserResponse;
 import com.test.api.dto.user.UserUpdateRequest;
 import com.test.api.dto.WebResponse;
 import com.test.api.service.UserService;
@@ -9,15 +10,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/users")
 public class UserController {
 
     private final UserService userService;
 
     @PostMapping(
-            path = "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -26,29 +28,34 @@ public class UserController {
     }
 
     @PatchMapping(
-            path = "/update",
+            path = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<Void>update(@RequestParam Long user_id, @RequestBody UserUpdateRequest request) {
+    public WebResponse<Void>update(@PathVariable("id") Long user_id, @RequestBody UserUpdateRequest request) {
         return userService.updateUser(user_id,request);
     }
 
     @DeleteMapping(
-            path = "/delete",
+            path = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<Void>delete(@RequestParam Long user_id) {
+    public WebResponse<Void>delete(@PathVariable("id") Long user_id) {
         return userService.deleteUser(user_id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public WebResponse<?> getUsers(@RequestParam(required = false) Long user_id) {
-        if (user_id != null) {
-            return userService.getOneUser(user_id);
-        } else {
-            return userService.getAllUser();
-        }
+    @GetMapping(
+            path = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<UserResponse> getUsers(@PathVariable("id") Long user_id) {
+        return userService.getOneUser(user_id);
+    }
+
+    @GetMapping(
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<UserResponse>>getAllUser(){
+        return userService.getAllUser();
     }
 
 }
