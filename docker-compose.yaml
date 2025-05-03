@@ -26,7 +26,7 @@ services:
 
 #using from docker hub
   backend:
-    image: nowyoucanseeme/spring-api-test:0.0.4
+    image: nowyoucanseeme/spring-api-test:0.0.5
     container_name: app-backend
     ports:
       - "8080:8080"
