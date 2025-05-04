@@ -5,6 +5,7 @@ import com.test.api.dto.user.UserResponse;
 import com.test.api.dto.user.UserUpdateRequest;
 import com.test.api.dto.WebResponse;
 import com.test.api.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "User Endpoint")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/users")
