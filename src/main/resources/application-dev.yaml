@@ -8,7 +8,9 @@ spring:
       ddl-auto: update
       format-sql: true
     show-sql: true
-
   output:
     ansi:
       enabled: always
+springdoc:
+  api-docs:
+    path: /api/v1/api-docs
